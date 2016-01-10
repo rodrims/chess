@@ -2,15 +2,26 @@ package chess;
 
 public class Pawn extends ChessPiece {
 	private boolean firstMove = true;
+
+    public Pawn(boolean isWhite) {
+        super(isWhite);
+    }
 	
-	public Pawn(int x, int y, boolean isWhite) {
-		super(x, y, isWhite);
+	@Override
+	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
+		// Checks if x is same and y is 1 off in correct direction.
+        int dY = newY - oldY;
+
+        if (oldX != newX) {
+            return false;
+        } else if (firstMove) {
+            return isWhite ? dY == 1 || dY == 2 : dY == -1 || dY == -2;
+        } else {
+            return isWhite ? dY == 1 : dY == -1;
+        }
 	}
 
-	@Override
-	protected boolean legalMove(int x, int y) {
-		// Checks if x is same and y is 1 off in correct direction.
-		// TODO: Use firstMove to test for 2 squares on first move.
-		return this.x == x ? (this.y + (isWhite ? 1 : -1) == y) : false;
-	}
+    public void moved() {
+        firstMove = false;
+    }
 }

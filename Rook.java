@@ -1,12 +1,18 @@
 package chess;
 
 public class Rook extends ChessPiece {
-	public Rook(int x, int y, boolean isWhite) {
-		super(x, y, isWhite);
-	}
+    public Rook(boolean isWhite) {
+        super(isWhite);
+    }
 
 	@Override
-	protected boolean legalMove(int x, int y) {
-		return this.x == x || this.y == y;
+	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
+        if (oldX == newX) {
+            return oldY != newY;
+        } else if (oldY == newY) {
+            return oldX != newX;
+        } else {
+            return false;
+        }
 	}
 }

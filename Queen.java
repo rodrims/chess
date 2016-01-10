@@ -1,14 +1,20 @@
 package chess;
 
 public class Queen extends ChessPiece {
-	public Queen(int x, int y, boolean isWhite) {
-		super(x, y, isWhite);
-	}
+    public Queen(boolean isWhite) {
+        super(isWhite);
+    }
 
 	@Override
-	protected boolean legalMove(int x, int y) {
-		int dx = this.x - x >= 0 ? this.x - x : -(this.x - x);
-		int dy = this.y - y >= 0 ? this.y - y : -(this.y - y);
-		return dx == 0 ? true : (dy == 0 ? true : dx == dy);
+	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
+		int dX = newX - oldX;
+		int dY = newY - oldY;
+        if (dX == 0) {
+            return dY != 0;
+        } else if (dY == 0) {
+            return true;
+        } else {
+            return (dX > 0 ? dX : -dX) == (dY > 0 ? dY : -dY);
+        }
 	}
 }

@@ -1,12 +1,20 @@
 package chess;
 
 public class Board {
-	private ChessPiece[][] tiles = new ChessPiece[8][8];
+	private Tile[][] board = new Tile[8][8];
+
+    public Board() {
+        for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				board[i][j] = new Tile(i, j);
+			}
+        }
+    }    
 
 	public void clearBoard() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				tiles[i][j] = null;
+				board[i][j].setPiece(null);
 			}
 		}
 	}
@@ -15,53 +23,43 @@ public class Board {
 		clearBoard();
 		
 		for (int i = 0; i < 8; i++) {
-			tiles[i][1] = new Pawn(i, 1, true);
-			tiles[i][6] = new Pawn(i, 1, false);
+			board[i][1].setPiece(new Pawn(true));
+			board[i][6].setPiece(new Pawn(false));
 		}
 
-		tiles[0][0] = new Rook(0, 0, true);
-		tiles[7][0] = new Rook(7, 0, true);
-		tiles[0][7] = new Rook(0, 7, false);
-		tiles[7][7] = new Rook(7, 7, false);
-		
-		tiles[1][0] = new Knight(1, 0, true);
-		tiles[6][0] = new Knight(6, 0, true);
-		tiles[1][7] = new Knight(1, 7, false);
-		tiles[6][7] = new Knight(6, 7, false);
-		
-		tiles[2][0] = new Bishop(2, 0, true);
-		tiles[5][0] = new Bishop(5, 0, true);
-		tiles[2][7] = new Bishop(2, 7, false);
-		tiles[5][7] = new Bishop(5, 7, false);
+		board[0][0].setPiece(new Rook(true));
+		board[7][0].setPiece(new Rook(true));
+		board[0][7].setPiece(new Rook(false));
+		board[7][7].setPiece(new Rook(false));
 
-		tiles[3][0] = new King(3, 0, true);
-		tiles[4][7] = new King(4, 7, false);
+		board[1][0].setPiece(new Knight(true));
+		board[6][0].setPiece(new Knight(true));
+		board[1][7].setPiece(new Knight(false));
+		board[6][7].setPiece(new Knight(false));
 
-		tiles[4][0] = new Queen(4, 0, true);
-		tiles[3][7] = new Queen(3, 7, false);
+		board[2][0].setPiece(new Bishop(true));
+		board[5][0].setPiece(new Bishop(true));
+		board[2][7].setPiece(new Bishop(false));
+		board[5][7].setPiece(new Bishop(false));
+
+		board[4][0].setPiece(new King(true));
+		board[4][7].setPiece(new King(false));
+
+		board[3][0].setPiece(new Queen(true));
+		board[3][7].setPiece(new Queen(false));
 	}
 
-	public boolean movePiece(int x, int y, int newX, int newY) {
-		if (tiles[x][y] == null) {
-			return false;
-		} else if (tiles[newX][newY] == null) {
-			if (tiles[x][y].move(newX, newY)) {
-				tiles[newX][newY] = tiles[x][y];
-				tiles[x][y] = null;
-				return true;
-			} else {
+	public boolean movePiece(int oldX, int oldY, int newX, int newY) {
+        Tile from = board[oldX][oldY];
+        Tile to = board[newX][newY];
+
+		if (from.canMovePieceThere(to)) {
+            to.setPiece(from.getPiece());
+            from.setPiece(null);
+            return true;
+        } else {
 				return false;
-			}
-		} else if (tiles[x][y].isWhite == tiles[newX][newY].isWhite) {
-			return false;
-		} else {
-			if (tiles[x][y].move(newX, newY)) {
-				tiles[newX][newY] = tiles[x][y];
-				tiles[x][y] = null;
-				return true;
-			} else {
-				return false;
-			}
-		}
+        }
+        // TODO: Implement use of {@code : moved()} methods
 	}
 }

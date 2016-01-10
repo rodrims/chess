@@ -1,14 +1,27 @@
 package chess;
 
 public class King extends ChessPiece {
-	public King(int x, int y, boolean isWhite) {
-		super(x, y, isWhite);
-	}
+    private boolean firstMove = true;
+
+    public King(boolean isWhite) {
+        super(isWhite);
+    }
 
 	@Override
-	protected boolean legalMove(int x, int y) {
-		int dx = this.x - x >= 0 ? this.x - x : -(this.x - x);
-		int dy = this.y - y >= 0 ? this.y - y : -(this.y - y);
-		return dx <= 1 ? dy <= 1 : false;
+	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
+		int dX = newX - oldX;
+		int dY = newY - oldY;
+        if (dX == 0) {
+            return (dY > 0 ? dY : - dY) == 1;
+        } else if ((dX > 0 ? dX : -dX) == 1) {
+            return (dY > 0 ? dY : -dY) <= 1;
+        } else {
+            return false;
+        }
+        // TODO: Implement castling check;
 	}
+
+    public void moved() {
+        firstMove = false;
+    }
 }	

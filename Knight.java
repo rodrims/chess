@@ -1,20 +1,22 @@
 package chess;
 
 public class Knight extends ChessPiece {
-	public Knight(int x, int y, boolean isWhite) {
-		super(x, y, isWhite);
-	}
-
+    public Knight(boolean isWhite) {
+        super(isWhite);
+    }
+    
 	@Override
-	protected boolean legalMove(int x, int y) {
-		if (x == this.x - 1 || x == this.x + 1) {
-			if (y == this.y - 2 || y == this.y + 2) {
+	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
+        int dX = newX - oldX;
+        int dY = newY - oldY;
+		if (dX == -1 || dX == 1) {
+			if (dY == -2 || dY == 2) {
 				return true;
 			} else {
 				return false;
 			}
-		} else if (x == this.x - 2 || x == this.x + 2) {
-			if (y == this.y - 1 || y == this.y + 2) {
+		} else if (dX == -2 || dX == 2) {
+			if (dY == -1 || dY == 1) {
 				return true;
 			} else {
 				return false;

@@ -7,7 +7,7 @@ public abstract class ChessPiece {
 		this.isWhite = isWhite;
 	}
 
-	public abstract boolean legalMove(short start[], short end[]);
+	public abstract boolean legalMove(int oldX, int oldY, int newX, int newY);
 
 	public boolean isWhite() {
 		return isWhite;
