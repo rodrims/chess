@@ -2,7 +2,7 @@ package chess;
 
 public class Rook extends ChessPiece {
     public Rook(boolean isWhite) {
-        super(isWhite);
+        super("Rook", isWhite);
     }
 
 	@Override

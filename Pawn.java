@@ -4,7 +4,7 @@ public class Pawn extends ChessPiece {
 	private boolean firstMove = true;
 
     public Pawn(boolean isWhite) {
-        super(isWhite);
+        super("Pawn", isWhite);
     }
 	
 	@Override

@@ -49,6 +49,14 @@ public class Board {
 		board[3][7].setPiece(new Queen(false));
 	}
 
+	public ChessPiece getPiece(int x, int y) throws IllegalArgumentException {
+		if (x < 0 || x > 7 || y < 0 || y > 7) {
+			throw new IllegalArgumentException("Coordinates ouside of range of board.");
+		} else {
+			return board[x][y].getPiece();
+		}
+	}
+
 	public boolean movePiece(int oldX, int oldY, int newX, int newY) {
         Tile from = board[oldX][oldY];
         Tile to = board[newX][newY];
@@ -56,10 +64,22 @@ public class Board {
 		if (from.canMovePieceThere(to)) {
             to.setPiece(from.getPiece());
             from.setPiece(null);
-            return true;
+            return true; // Possibly return the removed piece (?)
         } else {
 				return false;
         }
         // TODO: Implement use of {@code : moved()} methods
 	}
+
+    public String toString() {
+        String returnString = "";
+
+        for (int i = 8; i > 0; i--) {
+            for (int j = 0; j < 8; j++) {
+                returnString += board[i][j].toString() + " ";
+            }
+            returnString += "\n";
+        }
+        return returnString;
+    }
 }

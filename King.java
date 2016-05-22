@@ -4,7 +4,7 @@ public class King extends ChessPiece {
     private boolean firstMove = true;
 
     public King(boolean isWhite) {
-        super(isWhite);
+        super("King", isWhite);
     }
 
 	@Override

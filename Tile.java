@@ -38,12 +38,12 @@ public class Tile {
 	}
 
 	public void setPiece(ChessPiece piece) { // TODO: Need this?
-		this.piece = piece;
+		piece = piece; // Possibly return the removed piece (?)
 	}
 
 	@Override
 	public String toString() {
-		String letter = String.valueOf(65 + x);
+		String letter = hasPiece() ? Character.toString(piece.getName().charAt(0)) : Character.toString((char) (97 + x));
 		String number = Integer.toString(y);
 		return letter + number;
 	}

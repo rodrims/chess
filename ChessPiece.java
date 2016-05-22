@@ -1,9 +1,11 @@
 package chess;
 
 public abstract class ChessPiece {
+	protected String name;
 	protected boolean isWhite;
 
-	public ChessPiece(boolean isWhite) {
+	public ChessPiece(String name, boolean isWhite) {
+		this.name = name;
 		this.isWhite = isWhite;
 	}
 
@@ -11,5 +13,9 @@ public abstract class ChessPiece {
 
 	public boolean isWhite() {
 		return isWhite;
+	}
+
+	public String getName() {
+		return name;
 	}
 }
