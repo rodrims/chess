@@ -1,8 +1,11 @@
 package chess;
 
-public class Bishop extends ChessPiece {
+public class Bishop extends Piece {
+    private final String name = "Bishop";
+    private final String initial = "B";
+
     public Bishop(boolean isWhite) {
-        super("Bishop", isWhite);
+        super(isWhite);
     }
 
 	@Override
@@ -12,4 +15,19 @@ public class Bishop extends ChessPiece {
         // Checks to see if the absolute value of the delta values are equal.
 		return (dX > 0 ? dX : -dX) == (dY > 0 ? dY : -dY);
 	}
+
+    @Override
+    public Tile[] path(int oldX, int oldY, int newX, int newY) {
+        return null; // TODO: !!!
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getInitial() {
+        return initial;
+    }
 }

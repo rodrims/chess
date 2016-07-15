@@ -6,3 +6,6 @@ simple user interface.
 TODO:
 - Implement movement
 - Return removed pieces via Tile.java and Board.java
+
+MAYBE:
+- Implement variable starting positions for pieces

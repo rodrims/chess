@@ -1,12 +1,18 @@
 package chess;
 
-public class Pawn extends ChessPiece {
+public class Pawn extends Piece {
+	private String name = "Pawn";
+	private String initial = "P"; // TODO: Eventually get rid of this (Pawns aren't supposed to have an abbreviation)
 	private boolean firstMove = true;
 
-    public Pawn(boolean isWhite) {
-        super("Pawn", isWhite);
+	public Pawn(boolean isWhite) {
+        super(isWhite);
     }
-	
+
+	public void moved() {
+		firstMove = false;
+	}
+
 	@Override
 	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
 		// Checks if x is same and y is 1 off in correct direction.
@@ -21,7 +27,18 @@ public class Pawn extends ChessPiece {
         }
 	}
 
-    public void moved() {
-        firstMove = false;
-    }
+	@Override
+	public Tile[] path(int oldX, int oldY, int newX, int newY) {
+		return null; // TODO: !!!
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String getInitial() {
+		return initial;
+	}
 }

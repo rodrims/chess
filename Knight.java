@@ -1,10 +1,13 @@
 package chess;
 
-public class Knight extends ChessPiece {
+public class Knight extends Piece {
+    private final String name = "Knight";
+    private final String initial = "N";
+
     public Knight(boolean isWhite) {
-        super("Knight", isWhite);
+        super(isWhite);
     }
-    
+
 	@Override
 	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
         int dX = newX - oldX;
@@ -25,4 +28,19 @@ public class Knight extends ChessPiece {
 			return false;
 		}
 	}
+
+    @Override
+    public Tile[] path(int oldX, int oldY, int newX, int newY) {
+        return null; // TODO: !!!
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getInitial() {
+        return initial;
+    }
 }

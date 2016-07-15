@@ -1,27 +1,32 @@
 package chess;
 
 public class Board {
-	private Tile[][] board = new Tile[8][8];
+	private final int SIZE = 8;
+	private Tile[][] board = new Tile[SIZE][SIZE];
 
     public Board() {
-        for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				board[i][j] = new Tile(i, j);
 			}
         }
-    }    
+    }
 
 	public void clearBoard() {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				board[i][j].setPiece(null);
+		for (Tile[] tileArr : board) {
+			for (Tile tile : tileArr) {
+				tile.clearPiece();
 			}
 		}
 	}
 
 	public void resetBoard() {
 		clearBoard();
-		
+
+        /*
+         * Lots of magic numbers here that simply represent where on a
+         * chessboard these pieces go
+         */
 		for (int i = 0; i < 8; i++) {
 			board[i][1].setPiece(new Pawn(true));
 			board[i][6].setPiece(new Pawn(false));
@@ -49,8 +54,8 @@ public class Board {
 		board[3][7].setPiece(new Queen(false));
 	}
 
-	public ChessPiece getPiece(int x, int y) throws IllegalArgumentException {
-		if (x < 0 || x > 7 || y < 0 || y > 7) {
+	public Piece getPiece(int x, int y) throws IllegalArgumentException {
+		if (x < 0 || x > SIZE - 1 || y < 0 || y > SIZE - 1) {
 			throw new IllegalArgumentException("Coordinates ouside of range of board.");
 		} else {
 			return board[x][y].getPiece();
@@ -61,25 +66,31 @@ public class Board {
         Tile from = board[oldX][oldY];
         Tile to = board[newX][newY];
 
-		if (from.canMovePieceThere(to)) {
+        if (!from.hasPiece()) {
+            System.out.println("There is no piece there.");
+            return false;
+        } else if (Game.whiteTurn != from.getPiece().isWhite()) {
+            System.out.println("That is not your piece.");
+        } else if (from.movePieceTo(to)) { // TODO: Check for a clear path
             to.setPiece(from.getPiece());
-            from.setPiece(null);
+            from.clearPiece();
+            to.getPiece().moved();
             return true; // Possibly return the removed piece (?)
         } else {
-				return false;
+            System.out.println("Something else went wrong.");
+			return false;
         }
-        // TODO: Implement use of {@code : moved()} methods
 	}
 
-    public String toString() {
-        String returnString = "";
-
-        for (int i = 8; i > 0; i--) {
-            for (int j = 0; j < 8; j++) {
-                returnString += board[i][j].toString() + " ";
+    public void printBoard() {
+        for (int j = SIZE - 1; j >= 0; j--) {
+            System.out.print("+---+---+---+---+---+---+---+---+\n");
+            for (int i = 0; i < SIZE; i++) {
+                System.out.print("|");
+                System.out.print(board[i][j].toString());
             }
-            returnString += "\n";
+            System.out.print("|");
         }
-        return returnString;
+        System.out.print("+---+---+---+---+---+---+---+---+\n");
     }
 }

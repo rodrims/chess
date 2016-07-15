@@ -1,8 +1,11 @@
 package chess;
 
-public class Queen extends ChessPiece {
+public class Queen extends Piece {
+    private final String name = "Queen";
+    private final String initial = "Q";
+
     public Queen(boolean isWhite) {
-        super("Queen", isWhite);
+        super(isWhite);
     }
 
 	@Override
@@ -17,4 +20,19 @@ public class Queen extends ChessPiece {
             return (dX > 0 ? dX : -dX) == (dY > 0 ? dY : -dY);
         }
 	}
+
+    @Override
+    public Tile[] path(int oldX, int oldY, int newX, int newY) {
+        return null; // TODO: !!!
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getInitial() {
+        return initial;
+    }
 }

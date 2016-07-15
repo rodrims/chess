@@ -1,8 +1,11 @@
 package chess;
 
-public class Rook extends ChessPiece {
+public class Rook extends Piece {
+    private final String name = "Rook";
+    private final String initial = "R";
+
     public Rook(boolean isWhite) {
-        super("Rook", isWhite);
+        super(isWhite);
     }
 
 	@Override
@@ -15,4 +18,19 @@ public class Rook extends ChessPiece {
             return false;
         }
 	}
+
+    @Override
+    public Tile[] path(int oldX, int oldY, int newX, int newY) {
+        return null; // TODO: !!!
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getInitial() {
+        return initial;
+    }
 }

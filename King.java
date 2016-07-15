@@ -1,10 +1,16 @@
 package chess;
 
-public class King extends ChessPiece {
+public class King extends Piece {
+    private final String name = "King";
+    private final String initial = "K";
     private boolean firstMove = true;
 
     public King(boolean isWhite) {
-        super("King", isWhite);
+        super(isWhite);
+    }
+
+    public void moved() {
+        firstMove = false;
     }
 
 	@Override
@@ -21,7 +27,18 @@ public class King extends ChessPiece {
         // TODO: Implement castling check;
 	}
 
-    public void moved() {
-        firstMove = false;
+    @Override
+    public Tile[] path(int oldX, int oldY, int newX, int newY) {
+        return null; // TODO: !!!
     }
-}	
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getInitial() {
+        return initial;
+    }
+}

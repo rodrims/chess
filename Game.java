@@ -2,13 +2,13 @@ package chess;
 
 import java.util.Scanner;
 
-public class ChessGame {
+public class Game {
     private static boolean newGame = false;
     private static boolean whiteTurn = true;
 	private static Board board = new Board();
     private static Scanner sc = new Scanner(System.in);
 
-	public static void main(String[] args) {	
+	public static void main(String[] args) {
 		boolean exit = false;
 		String command = "";
 
