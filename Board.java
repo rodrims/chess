@@ -83,13 +83,13 @@ public class Board {
 
     public void printBoard() {
         for (int j = SIZE - 1; j >= 0; j--) {
-            System.out.print("+---+---+---+---+---+---+---+---+\n");
+            System.out.print("\n+---+---+---+---+---+---+---+---+\n");
             for (int i = 0; i < SIZE; i++) {
                 System.out.print("|");
-                System.out.print(board[i][j].toString());
+                System.out.printf(board[i][j].toString());
             }
             System.out.print("|");
         }
-        System.out.print("+---+---+---+---+---+---+---+---+\n");
+        System.out.print("\n+---+---+---+---+---+---+---+---+\n");
     }
 }

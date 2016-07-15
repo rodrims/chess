@@ -56,10 +56,9 @@ public class Tile {
 	@Override
 	public String toString() {
 		if (this.hasPiece()) {
-			String letter = Character.toString('a' + this.x);
-			String number = Integer.toString(this.y)
-			String color = this.piece.isWhite() ? "\u001B[37m" : "\u001B[31m";
-			return this.piece.getInitial() + letter + number + color;
+			String letter = Character.toString((char) ('a' + this.x));
+			String number = Integer.toString(this.y);
+			return this.piece.getInitial() + letter + number;
 		} else {
 			return isWhite ? "###" : "   ";
 		}

@@ -21,9 +21,9 @@ public class Pawn extends Piece {
         if (oldX != newX) {
             return false;
         } else if (firstMove) {
-            return isWhite ? dY == 1 || dY == 2 : dY == -1 || dY == -2;
+            return this.isWhite() ? dY == 1 || dY == 2 : dY == -1 || dY == -2;
         } else {
-            return isWhite ? dY == 1 : dY == -1;
+            return this.isWhite() ? dY == 1 : dY == -1;
         }
 	}
 

@@ -9,6 +9,7 @@ public class Game {
     private static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
+        board.resetBoard();
         board.printBoard();
 		// boolean exit = false;
 		// String command = "";
@@ -31,7 +32,7 @@ public class Game {
         if (inputString.equals("newGame")) {
            newGame();
         } else if (inputString.equals("printBoard")) {
-			printBoard();
+			board.printBoard();
         } else if (inputString.equals("help")) {
             System.out.println("Currently no help. Whoops.");
         } else if (inputString.equals("move")) {
