@@ -62,19 +62,18 @@ public class Board {
 		}
 	}
 
+    /*
+     * The piece chosen is guaranteed to be the correct color of the current
+     * player whose turn it is. The tile is also guaranteed to have a piece.
+     */
 	public boolean movePiece(int oldX, int oldY, int newX, int newY) {
         Tile from = board[oldX][oldY];
         Tile to = board[newX][newY];
 
-        if (!from.hasPiece()) {
-            System.out.println("There is no piece there.");
-            return false;
-        } else if (Game.whiteTurn != from.getPiece().isWhite()) {
-            System.out.println("That is not your piece.");
-        } else if (from.movePieceTo(to)) { // TODO: Check for a clear path
+        if (from.movePieceTo(to)) { // TODO: Check for a clear path
             to.setPiece(from.getPiece());
             from.clearPiece();
-            to.getPiece().moved();
+            to.getPiece().moved(); // Does not do much except for pawn and king
             return true; // Possibly return the removed piece (?)
         } else {
             System.out.println("Something else went wrong.");

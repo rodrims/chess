@@ -9,21 +9,22 @@ public class Game {
     private static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		boolean exit = false;
-		String command = "";
-
-		System.out.println("Welcome to Console Chess!");
-		System.out.println("Enter your commands or 'help' for help: ");
-        newGame();
-
-		do {
-            if (sc.hasNext()) {
-                command = sc.next().trim();
-                exit = handleConsoleInput(command);
-            } else {
-                System.out.println();
-            }
-		} while(!exit);
+        board.printBoard();
+		// boolean exit = false;
+		// String command = "";
+        //
+		// System.out.println("Welcome to Console Chess!");
+		// System.out.println("Enter your commands or 'help' for help: ");
+        // newGame();
+        //
+		// do {
+        //     if (sc.hasNext()) {
+        //         command = sc.next().trim();
+        //         exit = handleConsoleInput(command);
+        //     } else {
+        //         System.out.println();
+        //     }
+		// } while(!exit);
 	}
 
 	private static boolean handleConsoleInput(String inputString) {
@@ -52,15 +53,16 @@ public class Game {
         newGame = true;
         whiteTurn = true;
         System.out.println("\nYou've started a new game, white goes first.\n");
-		printBoard();
+		board.printBoard();
     }
 
-	private static void printBoard() {
-		System.out.println(board.toString() + "\n");
-	}
-
     private static void movePiece(int oldX, int oldY, int newX, int newY) {
-        if (!(board.getPiece(oldX, oldY).isWhite() ^ whiteTurn)) {
+        Piece chosenPiece = board.getPiece(oldX, oldY);
+
+        if (chosenPiece.isWhite() != whiteTurn) {
+            System.out.println("That is not your piece.");
+        }
+        if (!(board.getPiece(oldX, oldY).isWhite() != whiteTurn)) {
 			boolean moveSuccess = board.movePiece(oldX, oldY, newX, newY);
 			if (moveSuccess) {
 				whiteTurn = whiteTurn ? false : true;
@@ -68,8 +70,8 @@ public class Game {
 				System.out.println("That is an illegal move.");
 			}
 		} else {
-			String color =  whiteTurn ? "white's" : "black's";
-			System.out.printf("\nIt is not %s turn.", color);
+			String color =  whiteTurn ? "white" : "black";
+			System.out.printf("\nIt is not %s's turn.", color);
 		}
 	}
 }
