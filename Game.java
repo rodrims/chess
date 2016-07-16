@@ -77,10 +77,9 @@ public class Game {
     private static void movePiece(int oldX, int oldY, int newX, int newY) {
         Piece chosenPiece = board.getPiece(oldX, oldY);
 
-        if (chosenPiece.isWhite() != whiteTurn) {
-            System.out.println("That is not your piece.");
-        }
-        if (board.getPiece(oldX, oldY).isWhite() == whiteTurn) {
+        if (chosenPiece == null) {
+            System.out.println("There is no piece on that space.");
+        } else if (chosenPiece.isWhite() == whiteTurn) {
 			boolean moveSuccess = board.movePiece(oldX, oldY, newX, newY);
 			if (moveSuccess) {
 				whiteTurn = !whiteTurn;
@@ -90,7 +89,7 @@ public class Game {
 			}
 		} else {
 			String color =  whiteTurn ? "white" : "black";
-			System.out.printf("\nIt is not %s's turn.", color);
+			System.out.printf("That is not %s's piece.\n", color);
 		}
 	}
 }

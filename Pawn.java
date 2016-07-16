@@ -2,7 +2,7 @@ package chess;
 
 public class Pawn extends Piece {
 	private String name = "Pawn";
-	private String initial = "P"; // TODO: Eventually get rid of this (Pawns aren't supposed to have an abbreviation)
+	private String initial = " ";
 	private boolean firstMove = true;
 
 	public Pawn(boolean isWhite) {

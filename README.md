@@ -7,6 +7,9 @@ TODO:
 - Implement correct movement with path()
 - Return removed pieces via Tile.java and Board.java
 - Implement check and checkmate checks
+- Implement move history
+- Correct piece notation
+- Clean up display text
 
 MAYBE:
 - Implement variable starting positions for pieces

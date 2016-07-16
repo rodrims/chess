@@ -57,7 +57,7 @@ public class Tile {
 	public String toString() {
 		if (this.hasPiece()) {
 			String letter = Character.toString((char) ('a' + this.x));
-			String number = Integer.toString(this.y);
+			String number = Integer.toString(1 + this.y);
 			return this.piece.getInitial() + letter + number;
 		} else {
 			return isWhite ? "###" : "   ";
