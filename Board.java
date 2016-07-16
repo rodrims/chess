@@ -76,20 +76,21 @@ public class Board {
             to.getPiece().moved(); // Does not do much except for pawn and king
             return true; // Possibly return the removed piece (?)
         } else {
-            System.out.println("Something else went wrong.");
 			return false;
         }
 	}
 
     public void printBoard() {
         for (int j = SIZE - 1; j >= 0; j--) {
-            System.out.print("\n+---+---+---+---+---+---+---+---+\n");
+            System.out.print("\n  +---+---+---+---+---+---+---+---+\n");
+            System.out.printf("%d ", j + 1);
             for (int i = 0; i < SIZE; i++) {
                 System.out.print("|");
                 System.out.printf(board[i][j].toString());
             }
             System.out.print("|");
         }
-        System.out.print("\n+---+---+---+---+---+---+---+---+\n");
+        System.out.print("\n  +---+---+---+---+---+---+---+---+");
+        System.out.print("\n    a   b   c   d   e   f   g   h\n");
     }
 }
