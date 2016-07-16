@@ -16,7 +16,7 @@ public abstract class Piece {
     }
 
 	public void moved() {
-		return; // This will be overriden in certain instances
+		return; // This will be overriden only in certain instances
 	}
 
 	/*

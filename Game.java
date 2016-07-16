@@ -1,15 +1,15 @@
 package chess;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Game {
-    private static boolean newGame = false;
+    private static boolean newGame = false; // TODO: What was this for again?
     private static boolean whiteTurn = true;
 	private static Board board = new Board();
     private static Scanner sc = new Scanner(System.in);
-    private static Pattern movePatt = Pattern.compile("[a-h][1-8][ ][t][o][ ][a-h][1-8]");
+    private static Pattern patt = Pattern.compile("[a-h][1-8] to [a-h][1-8]");
 
 	public static void main(String[] args) {
 		boolean exit = false;
@@ -56,21 +56,24 @@ public class Game {
         board.resetBoard();
         newGame = true;
         whiteTurn = true;
-        System.out.println("\nYou've started a new game, white goes first.\n");
+        System.out.println("You've started a new game, white goes first.");
 		board.printBoard();
     }
 
     private static void moveCommand(String moveString) {
-        Matcher moveMatch = movePatt.matcher(moveString);
+        Matcher matcher = patt.matcher(moveString);
 
-        if (moveMatch.matches()) {
+        if (matcher.matches()) {
+            /*
+             * TODO Magic Number
+             */
             int oldX = moveString.charAt(0) - 'a';
             int oldY = moveString.charAt(1) - '1';
             int newX = moveString.charAt(6) - 'a';
             int newY = moveString.charAt(7) - '1';
             movePiece(oldX, oldY, newX, newY);
         } else {
-            System.out.println("No match.");
+            System.out.println("That is not a valid move command.");
         }
     }
 
