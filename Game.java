@@ -61,6 +61,11 @@ public class Game {
     }
 
     private static void moveCommand(String moveString) {
+        /*
+         * This matcher is delcared here since it needs to be re-initialized
+         * for every different string (I think). So it's easier to declare and
+         * initialize here in one step than in multiple convoluted ones.
+         */
         Matcher matcher = patt.matcher(moveString);
 
         if (matcher.matches()) {
@@ -95,4 +100,8 @@ public class Game {
 			System.out.printf("That is not %s's piece.\n", color);
 		}
 	}
+
+    public static Board getBoard() {
+        return board;
+    }
 }

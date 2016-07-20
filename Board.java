@@ -70,11 +70,15 @@ public class Board {
         Tile from = board[oldX][oldY];
         Tile to = board[newX][newY];
 
-        if (from.movePieceTo(to)) { // TODO: Check for a clear path
-            to.setPiece(from.getPiece());
-            from.clearPiece();
-            to.getPiece().moved(); // Does not do much except for pawn and king
-            return true; // Possibly return the removed piece (?)
+        if (from.movePieceTo(to)) {
+			if (from.getPiece().path(oldX, oldY, newX, newY).size() == 0) { // TODO YUCK !!!
+				to.setPiece(from.getPiece());
+				from.clearPiece();
+				to.getPiece().moved(); // Does not do much except for pawn and king
+				return true; // Possibly return the removed piece (?)
+			} else  {
+				return false;
+			}
         } else {
 			return false;
         }

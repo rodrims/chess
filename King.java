@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.LinkedList;
+
 public class King extends Piece {
     private final String name = "King";
     private final String initial = "K";
@@ -28,8 +30,8 @@ public class King extends Piece {
 	}
 
     @Override
-    public Tile[] path(int oldX, int oldY, int newX, int newY) {
-        return null; // TODO: !!!
+    public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
+        return new LinkedList<Piece>(); // TODO: !!!
     }
 
     @Override

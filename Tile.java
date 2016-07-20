@@ -33,11 +33,11 @@ public class Tile {
 		return piece != null;
 	}
 
-	public Piece getPiece() { // TODO: Need this?
+	public Piece getPiece() {
 		return piece;
 	}
 
-	public Piece setPiece(Piece piece) throws IllegalArgumentException { // TODO: Need this?
+	public Piece setPiece(Piece piece) throws IllegalArgumentException {
         if (piece == null) {
             throw new IllegalArgumentException("Cannot set tile to null.");
         }
