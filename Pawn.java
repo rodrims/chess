@@ -40,6 +40,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
+		Board board = Game.getBoard();
 		LinkedList<Piece> lList = new LinkedList<>();
 
 		if (!legalMove(oldX, oldY, newX, newY)) {
@@ -48,9 +49,8 @@ public class Pawn extends Piece {
 			int dY = newY - oldY;
 
 			if (this.isWhite() ? dY == 2 : dY == -2) {
-				Board board = Game.getBoard();
 				int checkY = this.isWhite() ? oldY + 1 : oldY - 1;
-				
+
 				if (board.getPiece(oldX, checkY) != null) {
 					lList.add(board.getPiece(oldX, checkY));
 				}
