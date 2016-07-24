@@ -33,7 +33,7 @@ public class Knight extends Piece {
 
     @Override
     public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
-        return new LinkedList<Piece>(); // TODO: !!!
+        return new LinkedList<Piece>(); // This is correct; knights ignore paths
     }
 
     @Override

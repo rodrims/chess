@@ -26,12 +26,12 @@ public class King extends Piece {
         } else {
             return false;
         }
-        // TODO: Implement castling check;
+        // TODO: Implement castling check
 	}
 
     @Override
     public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
-        return new LinkedList<Piece>(); // TODO: !!!
+        return new LinkedList<Piece>(); // TODO: Castling!!!
     }
 
     @Override
