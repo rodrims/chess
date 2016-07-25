@@ -16,7 +16,7 @@ public class Tile {
     public boolean movePieceTo(Tile other) throws IllegalArgumentException {
         if (!this.hasPiece()) {
 			throw new IllegalArgumentException("The first tile is empty.");
-		} else if (piece.legalMove(this.x, this.y, other.x, other.y)) {
+		} else if (piece.validMove(this.x, this.y, other.x, other.y)) {
             if (!other.hasPiece()) {
                 return true;
             } else if (this.piece.sameColor(other.piece)) {
@@ -58,7 +58,7 @@ public class Tile {
 		if (this.hasPiece()) {
 			String letter = Character.toString((char) ('a' + this.x));
 			String number = Integer.toString(1 + this.y);
-			return this.piece.getInitial() + letter + number;
+			return this.piece.getLetter() + letter + number;
 		} else {
 			return isWhite ? "###" : "   ";
 		}

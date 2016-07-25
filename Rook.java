@@ -1,74 +1,68 @@
 package chess;
 
-import java.util.LinkedList;
-
 public class Rook extends Piece {
-    private final String name = "Rook";
-    private final String initial = "R";
-
     public Rook(boolean isWhite) {
-        super(isWhite);
+        super("Rook", "R", isWhite);
     }
 
 	@Override
-	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
-        if (oldX == newX) {
-            return oldY != newY;
-        } else if (oldY == newY) {
-            return oldX != newX;
-        } else {
-            return false;
-        }
+	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
+        int dX = newX - oldX;
+        int dY = newY - oldY;
+
+        /*
+         * A rook moves either vertically or horizontally at one time. So either
+         * dX or dY must be zero and both cannot be zero and both cannot be
+         * non-zero.
+         */
+        return (dX == 0) ^ (dY == 0);
 	}
 
     @Override
-    public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
+    public boolean validMove(int oldX, int oldY, int newX, int newY) {
         Board board = Game.getBoard();
-        LinkedList<Piece> lList = new LinkedList<>();
 
-        if (!legalMove(oldX, oldY, newX, newY)) {
-            throw new IllegalArgumentException("The move is not legal.");
-        } else {
+        if (this.legalPosition(oldX, oldY, newX, newY)) {
             int dX = newX - oldX;
             int dY = newY - oldY;
 
+            /*
+             * This variable is a counter to iterate through the number of
+             * spaces moved through. If dX is non-zero then dY must be zero, and
+             * if dY is non-zero then dX must be non-zero from the call to
+             * legalMove(...) above.
+             */
+            int counter = dX != 0 ? Math.abs(dX) : Math.abs(dY);
+
             if (dX > 0) {
-                for (int i = 1; i < dX; i++) {
+                for (int i = 1; i < counter; i++) {
                     if (board.getPiece(oldX + i, oldY) != null) {
-                        lList.add(board.getPiece(oldX + i, oldY));
+                        return false;
                     }
                 }
             } else if (dX < 0) {
-                for (int i = -1; i > dX; i--) {
-                    if (board.getPiece(oldX + i, oldY) != null) {
-                        lList.add(board.getPiece(oldX + i, oldY));
+                for (int i = 1; i < counter; i++) {
+                    if (board.getPiece(oldX - i, oldY) != null) {
+                        return false;
                     }
                 }
             } else if (dY > 0) {
-                for (int i = 1; i < dY; i++) {
+                for (int i = 1; i < counter; i++) {
                     if (board.getPiece(oldX, oldY + i) != null) {
-                        lList.add(board.getPiece(oldX, oldY + i));
+                        return false;
                     }
                 }
-            } else if (dY < 0) {
-                for (int i = -1; i > dY; i--) {
-                    if (board.getPiece(oldX, oldY + i) != null) {
-                        lList.add(board.getPiece(oldX, oldY + i));
+            } else {
+                for (int i = 1; i < counter; i++) {
+                    if (board.getPiece(oldX, oldY - i) != null) {
+                        return false;
                     }
                 }
             }
+        } else {
+            return false;
         }
 
-        return lList;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getInitial() {
-        return initial;
+        return true;
     }
 }

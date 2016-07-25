@@ -1,82 +1,68 @@
 package chess;
 
-import java.util.LinkedList;
-
 public class Bishop extends Piece {
-    private final String name = "Bishop";
-    private final String initial = "B";
-
     public Bishop(boolean isWhite) {
-        super(isWhite);
+        super("Bishop", "B", isWhite);
     }
 
 	@Override
-	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
+	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
 		int dX = newX - oldX;
 		int dY = newY - oldY;
-        // Checks to see if the absolute value of the delta values are equal.
-		return (dX > 0 ? dX : -dX) == (dY > 0 ? dY : -dY);
+
+		return Math.abs(dX) == Math.abs(dY);
 	}
 
     @Override
-    public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
+    public boolean validMove(int oldX, int oldY, int newX, int newY) {
         Board board = Game.getBoard();
-        LinkedList<Piece> lList = new LinkedList<>();
 
-        if (!legalMove(oldX, oldY, newX, newY)) {
-            throw new IllegalArgumentException("The move is not legal.");
-        } else {
+        if (this.legalPosition(oldX, oldY, newX, newY)) {
             int dX = newX - oldX;
     		int dY = newY - oldY;
 
             /*
              * This variable is a counter to iterate through the number of
              * spaces moved through. dY could also be used here we just need the
-             * positive value for how many spaces were moved through.
+             * total number of spaces the piece moved through.
              */
-            int counter = dX > 0 ? dX : -dX;
+            int counter = Math.abs(dX);
+
             /*
-             * Both dX and dY will have the same absolute value (because of how
+             * Both dX and dY will have the same Math.absolute value (because of how
              * bishops move), it is only necessary to get their "direction" i.e.
-             * whether they are positive or negative values.
+             * whether they are positive or negative values in order to check
+             * the correct tiles.
              */
             if (dX > 0 && dY > 0) {
                 for (int i = 1; i < counter; i++) {
                     if (board.getPiece(oldX + i, oldY + i) != null) {
-                        lList.add(board.getPiece(oldX + i, oldY + i));
+                        return false;
                     }
                 }
             } else if (dX > 0 && dY < 0) {
                 for (int i = 1; i < counter; i++) {
                     if (board.getPiece(oldX + i, oldY - i) != null) {
-                        lList.add(board.getPiece(oldX + i, oldY + i));
+                        return false;
                     }
                 }
             } else if (dX < 0 && dY > 0) {
                 for (int i = 1; i < counter; i++) {
                     if (board.getPiece(oldX - i, oldY + i) != null) {
-                        lList.add(board.getPiece(oldX + i, oldY + i));
+                        return false;
                     }
                 }
-            } else if (dX < 0 && dY < 0) {
+            } else {
                 for (int i = 1; i < counter; i++) {
                     if (board.getPiece(oldX - i, oldY - i) != null) {
-                        lList.add(board.getPiece(oldX + i, oldY + i));
+                        return false;
                     }
                 }
             }
+        } else {
+            return false;
         }
 
-        return lList;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getInitial() {
-        return initial;
+        return true;
     }
 }

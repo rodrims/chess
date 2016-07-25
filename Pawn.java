@@ -1,14 +1,11 @@
 package chess;
 
-import java.util.LinkedList;
-
 public class Pawn extends Piece {
-	private String name = "Pawn";
-	private String initial = " ";
-	private boolean firstMove = true;
+	private boolean firstMove;
 
 	public Pawn(boolean isWhite) {
-        super(isWhite);
+        super("Pawn", " ", isWhite);
+		this.firstMove = true;
     }
 
 	public void moved() {
@@ -16,12 +13,12 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
-		// Checks if x is same and y is 1 off in correct direction.
+	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
 		int dX = newX - oldX;
         int dY = newY - oldY;
 
-		if (dX == 0) { // TODO Make this more uniform ?
+		// TODO Can this be made more uniform?
+		if (dX == 0) {
 			if (firstMove) {
 				if (this.isWhite()) {
 					return dY == 1 || dY == 2;
@@ -31,7 +28,7 @@ public class Pawn extends Piece {
 			} else {
 				return this.isWhite() ? dY == 1 : dY == -1;
 			}
-		} else if (dX == 1 || dX == -1) {
+		} else if (Math.abs(dX) == 1) {
 			return this.isWhite() ? dY == 1 : dY == -1;
 		} else {
 			return false;
@@ -39,34 +36,29 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
+	public boolean validMove(int oldX, int oldY, int newX, int newY) {
 		Board board = Game.getBoard();
-		LinkedList<Piece> lList = new LinkedList<>();
 
-		if (!legalMove(oldX, oldY, newX, newY)) {
-			throw new IllegalArgumentException("The move is not legal.");
-		} else {
+		if (this.legalPosition(oldX, oldY, newX, newY)) {
+			/*
+			 * Pawns will only have to check for a valid path if they move
+			 * forward 2 spaces; There is no need for a dX.
+			 */
 			int dY = newY - oldY;
 
-			if (this.isWhite() ? dY == 2 : dY == -2) {
+			if (Math.abs(dY) == 2) {
 				int checkY = this.isWhite() ? oldY + 1 : oldY - 1;
 
 				if (board.getPiece(oldX, checkY) != null) {
-					lList.add(board.getPiece(oldX, checkY));
+					return false;
+				} else {
+					return true;
 				}
+			} else {
+				return true;
 			}
+		} else {
+			return false;
 		}
-
-		return lList;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public String getInitial() {
-		return initial;
 	}
 }

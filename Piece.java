@@ -1,12 +1,22 @@
 package chess;
 
-import java.util.LinkedList;
-
 public abstract class Piece {
+	private String name;
+	private String letter;
 	private boolean isWhite;
 
-	public Piece(boolean isWhite) {
+	public Piece(String name, String letter, boolean isWhite) {
+		this.name = name;
+		this.letter = letter;
 		this.isWhite = isWhite;
+	}
+
+	public String getName() {
+		return this.letter;
+	}
+
+	public  String getLetter() {
+		return this.letter;
 	}
 
     public boolean isWhite() {
@@ -18,23 +28,24 @@ public abstract class Piece {
     }
 
 	public void moved() {
-		return; // This will be overriden only in certain instances
+		return; // This will be overriden/necessary in certain instances
 	}
 
 	/*
 	 * Abstract methods
 	 */
-	public abstract boolean legalMove(int oldX, int oldY, int newX, int newY);
 
 	/*
-	 * Returns a collection of all the pieces in the path between the starting
-	 * and final point so as to check if the move can be executed in addition to
-	 * making sure it is a legal move. Both legal move should return true and
-	 * path should return an empty collection for any set of movement points.
+	 * Returns whether the specified final position is valid for the piece given
+	 * the starting position.
 	 */
- 	public abstract LinkedList<Piece> path(int oldX, int oldY, int newX, int newY);
+	protected abstract boolean legalPosition(int oldX, int oldY, int newX, int newY);
 
- 	public abstract String getName();
-
- 	public abstract String getInitial();
+	/*
+	 * Returns whether the speciefied move is a valid one by making sure the
+	 * final position is legal as well as the path taken to that position is
+	 * empty of other pieces. This method should call the legalPosition(...)
+	 * method first.
+	 */
+ 	public abstract boolean validMove(int oldX, int oldY, int newX, int newY);
 }

@@ -1,40 +1,93 @@
 package chess;
 
-import java.util.LinkedList;
-
 public class Queen extends Piece {
-    private final String name = "Queen";
-    private final String initial = "Q";
-
     public Queen(boolean isWhite) {
-        super(isWhite);
+        super("Queen", "Q", isWhite);
     }
 
 	@Override
-	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
+	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
 		int dX = newX - oldX;
 		int dY = newY - oldY;
-        if (dX == 0) {
-            return dY != 0;
-        } else if (dY == 0) {
+
+        /*
+         * If only one of dX or dY are zero then the queen is behaving like a
+         * rook, if they are both non-zero then it is behaving like a bishop.
+         */
+        if ((dX == 0) ^ (dY == 0)) {
             return true;
         } else {
-            return (dX > 0 ? dX : -dX) == (dY > 0 ? dY : -dY);
+            return Math.abs(dX) == Math.abs(dY);
         }
 	}
 
     @Override
-    public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
-        return new LinkedList<Piece>(); // TODO: !!!
-    }
+    public boolean validMove(int oldX, int oldY, int newX, int newY) {
+        Board board = Game.getBoard();
 
-    @Override
-    public String getName() {
-        return name;
-    }
+        if (legalPosition(oldX, oldY, newX, newY)) {
+            int dX = newX - oldX;
+            int dY = newY - oldY;
 
-    @Override
-    public String getInitial() {
-        return initial;
+            int counter = dX != 0 ? Math.abs(dX) : Math.abs(dY);
+
+            if ((dX == 0) ^ (dY == 0)) {
+                if (dX > 0) {
+                    for (int i = 1; i < counter; i++) {
+                        if (board.getPiece(oldX + i, oldY) != null) {
+                            return false;
+                        }
+                    }
+                } else if (dX < 0) {
+                    for (int i = 1; i < counter; i++) {
+                        if (board.getPiece(oldX - i, oldY) != null) {
+                            return false;
+                        }
+                    }
+                } else if (dY > 0) {
+                    for (int i = 1; i < counter; i++) {
+                        if (board.getPiece(oldX, oldY + i) != null) {
+                            return false;
+                        }
+                    }
+                } else {
+                    for (int i = 1; i < counter; i++) {
+                        if (board.getPiece(oldX, oldY - i) != null) {
+                            return false;
+                        }
+                    }
+                }
+            } else {
+                if (dX > 0 && dY > 0) {
+                    for (int i = 1; i < counter; i++) {
+                        if (board.getPiece(oldX + i, oldY + i) != null) {
+                            return false;
+                        }
+                    }
+                } else if (dX > 0 && dY < 0) {
+                    for (int i = 1; i < counter; i++) {
+                        if (board.getPiece(oldX + i, oldY - i) != null) {
+                            return false;
+                        }
+                    }
+                } else if (dX < 0 && dY > 0) {
+                    for (int i = 1; i < counter; i++) {
+                        if (board.getPiece(oldX - i, oldY + i) != null) {
+                            return false;
+                        }
+                    }
+                } else {
+                    for (int i = 1; i < counter; i++) {
+                        if (board.getPiece(oldX - i, oldY - i) != null) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+
+        return true;
     }
 }

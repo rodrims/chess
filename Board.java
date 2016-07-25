@@ -71,14 +71,10 @@ public class Board {
         Tile to = board[newX][newY];
 
         if (from.movePieceTo(to)) {
-			if (from.getPiece().path(oldX, oldY, newX, newY).size() == 0) { // TODO YUCK !!!
-				to.setPiece(from.getPiece());
-				from.clearPiece();
-				to.getPiece().moved(); // Does not do much except for pawn and king
-				return true; // Possibly return the removed piece (?)
-			} else  {
-				return false;
-			}
+			to.setPiece(from.getPiece());
+			from.clearPiece();
+			to.getPiece().moved(); // Only affects the pawn and king
+			return true; // TODO Return the removed piece?
         } else {
 			return false;
         }

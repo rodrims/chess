@@ -1,48 +1,31 @@
 package chess;
 
-import java.util.LinkedList;
-
 public class Knight extends Piece {
-    private final String name = "Knight";
-    private final String initial = "N";
-
     public Knight(boolean isWhite) {
-        super(isWhite);
+        super("Knight", "N", isWhite);
     }
 
 	@Override
-	public boolean legalMove(int oldX, int oldY, int newX, int newY) {
+	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
         int dX = newX - oldX;
         int dY = newY - oldY;
-		if (dX == -1 || dX == 1) {
-			if (dY == -2 || dY == 2) {
-				return true;
-			} else {
-				return false;
-			}
-		} else if (dX == -2 || dX == 2) {
-			if (dY == -1 || dY == 1) {
-				return true;
-			} else {
-				return false;
-			}
+
+		if (Math.abs(dX) == 1) {
+			return Math.abs(dY) == 2;
+		} else if (Math.abs(dY) == 1) {
+			return Math.abs(dX) == 2;
 		} else {
 			return false;
 		}
 	}
 
     @Override
-    public LinkedList<Piece> path(int oldX, int oldY, int newX, int newY) {
-        return new LinkedList<Piece>(); // This is correct; knights ignore paths
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getInitial() {
-        return initial;
+    public boolean validMove(int oldX, int oldY, int newX, int newY) {
+        if (this.legalPosition(oldX, oldY, newX, newY)) {
+            // Knights can "jump" over other pieces no matter the color
+            return true;
+        } else {
+            return false;
+        }
     }
 }
