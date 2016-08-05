@@ -1,10 +1,10 @@
 package chess;
 
 public class Tile {
-	int x;
-	int y;
-	boolean isWhite;
-	Piece piece;
+	private int x;
+	private int y;
+	private boolean isWhite;
+	private Piece piece;
 
 	public Tile(int x, int y) {
 		this.x = x;
