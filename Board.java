@@ -54,7 +54,7 @@ public class Board {
 		board[3][7].setPiece(new Queen(false));
 	}
 
-	public Piece getPiece(int x, int y) throws IllegalArgumentException {
+	public Piece getPiece(int x, int y) {
 		if (x < 0 || x > SIZE - 1 || y < 0 || y > SIZE - 1) {
 			throw new IllegalArgumentException("Coordinates ouside of range of board.");
 		} else {

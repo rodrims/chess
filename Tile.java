@@ -13,7 +13,7 @@ public class Tile {
 		this.piece = null;
 	}
 
-    public boolean movePieceTo(Tile other) throws IllegalArgumentException {
+    public boolean movePieceTo(Tile other) {
         if (!this.hasPiece()) {
 			throw new IllegalArgumentException("The first tile is empty.");
 		} else if (piece.validMove(this.x, this.y, other.x, other.y)) {
@@ -37,7 +37,7 @@ public class Tile {
 		return piece;
 	}
 
-	public Piece setPiece(Piece piece) throws IllegalArgumentException {
+	public Piece setPiece(Piece piece) {
         if (piece == null) {
             throw new IllegalArgumentException("Cannot set tile to null.");
         }
