@@ -1,68 +1,37 @@
 package chess;
 
 public class Rook extends Piece {
+	private boolean firstMove = true;
+
     public Rook(boolean isWhite) {
         super("Rook", "R", isWhite);
     }
 
+    public Rook(boolean isWhite, int x, int y) {
+        super("Rook", "R", isWhite, x, y);
+    }
+
 	@Override
-	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
-        int dX = newX - oldX;
-        int dY = newY - oldY;
+	public boolean moveTo(int newX, int newY) {
+		if (legalPosition(newX, newY) {
+			this.x = newX;
+			this.y = newY;
+			firstMove = false;
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean legalPosition(int newX, int newY) {
+        int dX = newX - x;
+        int dY = newY - y;
 
         /*
-         * A rook moves either vertically or horizontally at one time. So either
-         * dX or dY must be zero and both cannot be zero and both cannot be
-         * non-zero.
+         * A rook moves either vertically or horizontally at one time. So dX and
+		 * dY must be exclusively zero. 
          */
         return (dX == 0) ^ (dY == 0);
 	}
-
-    @Override
-    public boolean validMove(int oldX, int oldY, int newX, int newY) {
-        Board board = Game.getBoard();
-
-        if (this.legalPosition(oldX, oldY, newX, newY)) {
-            int dX = newX - oldX;
-            int dY = newY - oldY;
-
-            /*
-             * This variable is a counter to iterate through the number of
-             * spaces moved through. If dX is non-zero then dY must be zero, and
-             * if dY is non-zero then dX must be non-zero from the call to
-             * legalMove(...) above.
-             */
-            int counter = dX != 0 ? Math.abs(dX) : Math.abs(dY);
-
-            if (dX > 0) {
-                for (int i = 1; i < counter; i++) {
-                    if (board.getPiece(oldX + i, oldY) != null) {
-                        return false;
-                    }
-                }
-            } else if (dX < 0) {
-                for (int i = 1; i < counter; i++) {
-                    if (board.getPiece(oldX - i, oldY) != null) {
-                        return false;
-                    }
-                }
-            } else if (dY > 0) {
-                for (int i = 1; i < counter; i++) {
-                    if (board.getPiece(oldX, oldY + i) != null) {
-                        return false;
-                    }
-                }
-            } else {
-                for (int i = 1; i < counter; i++) {
-                    if (board.getPiece(oldX, oldY - i) != null) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-
-        return true;
-    }
 }

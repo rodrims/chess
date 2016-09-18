@@ -1,93 +1,30 @@
 package chess;
 
+import java.util.Math;
+
 public class Queen extends Piece {
     public Queen(boolean isWhite) {
         super("Queen", "Q", isWhite);
     }
 
+    public Queen(boolean isWhite, int x, int y) {
+        super("Queen", "Q", isWhite, x, y);
+    }
+
 	@Override
-	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
+	public boolean legalPosition(int oldX, int oldY, int newX, int newY) {
 		int dX = newX - oldX;
 		int dY = newY - oldY;
 
-        /*
-         * If only one of dX or dY are zero then the queen is behaving like a
-         * rook, if they are both non-zero then it is behaving like a bishop.
-         */
+		// If dX and dY are exclusively 0, then the queen is behaving like a
+		// bishop, otherwise she is behaving like a rook.
         if ((dX == 0) ^ (dY == 0)) {
             return true;
         } else {
-            return Math.abs(dX) == Math.abs(dY);
+            return abs(dX) == abs(dY);
         }
+
+		// TODO This *should* be unnecessary, but I'll keep it here for now.
+		return false;
 	}
-
-    @Override
-    public boolean validMove(int oldX, int oldY, int newX, int newY) {
-        Board board = Game.getBoard();
-
-        if (legalPosition(oldX, oldY, newX, newY)) {
-            int dX = newX - oldX;
-            int dY = newY - oldY;
-
-            int counter = dX != 0 ? Math.abs(dX) : Math.abs(dY);
-
-            if ((dX == 0) ^ (dY == 0)) {
-                if (dX > 0) {
-                    for (int i = 1; i < counter; i++) {
-                        if (board.getPiece(oldX + i, oldY) != null) {
-                            return false;
-                        }
-                    }
-                } else if (dX < 0) {
-                    for (int i = 1; i < counter; i++) {
-                        if (board.getPiece(oldX - i, oldY) != null) {
-                            return false;
-                        }
-                    }
-                } else if (dY > 0) {
-                    for (int i = 1; i < counter; i++) {
-                        if (board.getPiece(oldX, oldY + i) != null) {
-                            return false;
-                        }
-                    }
-                } else {
-                    for (int i = 1; i < counter; i++) {
-                        if (board.getPiece(oldX, oldY - i) != null) {
-                            return false;
-                        }
-                    }
-                }
-            } else {
-                if (dX > 0 && dY > 0) {
-                    for (int i = 1; i < counter; i++) {
-                        if (board.getPiece(oldX + i, oldY + i) != null) {
-                            return false;
-                        }
-                    }
-                } else if (dX > 0 && dY < 0) {
-                    for (int i = 1; i < counter; i++) {
-                        if (board.getPiece(oldX + i, oldY - i) != null) {
-                            return false;
-                        }
-                    }
-                } else if (dX < 0 && dY > 0) {
-                    for (int i = 1; i < counter; i++) {
-                        if (board.getPiece(oldX - i, oldY + i) != null) {
-                            return false;
-                        }
-                    }
-                } else {
-                    for (int i = 1; i < counter; i++) {
-                        if (board.getPiece(oldX - i, oldY - i) != null) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-
-        return true;
-    }
 }

@@ -1,14 +1,24 @@
 package chess;
 
+import java.lang.Math;
+
 public abstract class Piece {
-	private String name;
-	private String letter;
+	private static String name;
+	private static String letter;
 	private boolean isWhite;
+	private int x;
+	private int y;
 
 	public Piece(String name, String letter, boolean isWhite) {
 		this.name = name;
 		this.letter = letter;
 		this.isWhite = isWhite;
+	}
+
+	public Piece(String name, String letter, boolean isWhite, int x, int y) {
+		Piece(name, letter, isWhite);
+		this.x = x;
+		this.y = y;
 	}
 
 	public String getName() {
@@ -23,29 +33,79 @@ public abstract class Piece {
         return isWhite;
     }
 
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
     public boolean sameColor(Piece other) {
         return this.isWhite == other.isWhite;
     }
 
-	public void moved() {
-		return; // This will be overriden/necessary in certain instances
+	public boolean moveTo(int newX, int newY) {
+		if (legalPosition(newX, newY)) {
+			this.x = newX;
+			this.y = newY;
+			return true;
+		}
+
+		return false;
 	}
 
 	/*
-	 * Abstract methods
+	 * Returns whether the position is a legal one for capturing.
+	 */
+	public boolean captureAt(int newX, int newY) {
+		return legalPosition(newX, newY);
+	}
+
+	/*
+	 * Returns a path of coordinates the move would take the piece through.
+	 */
+ 	public abstract int[][] path(int newX, int newY) {
+		// I avoid these, but not impossible to continue if !legalPosition().
+		if (!legalPosition(newX, newY)) {
+			throw new IllegalArgumentException("Cannot compute path.");
+		}
+
+		int[][] path;
+		// Stand for "delta x" and "delta y".
+		int dX = newX - x;
+		int dY = newY - y;
+		// Gives an increment variable so whether dX and dY are positive or
+		// negative can be disregarded.
+		int incX = dX == 0 ? 0 : dX > 0 ? 1 : -1;
+		int incY = dY == 0 ? 0 : dY > 0 ? 1 : -1;
+
+		// Distance is the number of positions, minus one, moved through. This
+		// is calculated using Math.abs.
+		int distance = (dX != 0 ? abs(dX) : abs(dY)) - 1;
+		if (distance == 0) {
+			path = null;
+		} else {
+			path = new int[distance][2];
+			int currX = x + incX;
+			int currY = y + incY;
+			for (int i = 0; i < distance; i++) {
+				path[i][0] = currX;
+				path[i][1] = currY;
+				currX += incX;
+				currY += incY;
+			}
+		}
+
+		return path;
+	}
+
+	/*
+	 * ___ABSTRACT METHODS___
 	 */
 
 	/*
-	 * Returns whether the specified final position is valid for the piece given
-	 * the starting position.
+	 * Returns whether the position is legal based on the current position.
 	 */
-	protected abstract boolean legalPosition(int oldX, int oldY, int newX, int newY);
-
-	/*
-	 * Returns whether the speciefied move is a valid one by making sure the
-	 * final position is legal as well as the path taken to that position is
-	 * empty of other pieces. This method should call the legalPosition(...)
-	 * method first.
-	 */
- 	public abstract boolean validMove(int oldX, int oldY, int newX, int newY);
+	protected abstract boolean legalPosition(int newX, int newY);
 }

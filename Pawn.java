@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Math;
+
 public class Pawn extends Piece {
 	private boolean firstMove;
 
@@ -8,57 +10,45 @@ public class Pawn extends Piece {
 		this.firstMove = true;
     }
 
-	public void moved() {
-		firstMove = false;
+	public Pawn(boolean isWhite, int x, int y) {
+		super("Pawn", " ", isWhite, x, y);
+		this.firstMove = true;
 	}
 
 	@Override
-	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
-		int dX = newX - oldX;
-        int dY = newY - oldY;
+	public boolean moveTo(int newX, int newY) {
+		if (legalPosition(newX, newY) {
+			this.x = newX;
+			this.y = newY;
+			firstMove = false;
+			return true;
+		}
 
-		// TODO Can this be made more uniform?
+		return false;
+	}
+
+	@Override
+	public boolean captureAt(int newX, int newY) {
+		if (abs(dX) == 1) {
+			return isWhite ? dY == 1 : dY == -1; 
+		}
+
+		return false;
+	}
+
+	@Override
+	protected boolean legalPosition(int newX, int newY) {
+		int dX = newX - x;
+        int dY = newY - y;
+
 		if (dX == 0) {
 			if (firstMove) {
-				if (this.isWhite()) {
-					return dY == 1 || dY == 2;
-				} else {
-					return dY == -1 || dY == -2;
-				}
+				return isWhite ? (dY == 1 || dY == 2) : (dY == -1 || dy == -2);
 			} else {
-				return this.isWhite() ? dY == 1 : dY == -1;
+				return isWhite ? dY == 1 : dY == -1;
 			}
-		} else if (Math.abs(dX) == 1) {
-			return this.isWhite() ? dY == 1 : dY == -1;
-		} else {
-			return false;
 		}
-	}
 
-	@Override
-	public boolean validMove(int oldX, int oldY, int newX, int newY) {
-		Board board = Game.getBoard();
-
-		if (this.legalPosition(oldX, oldY, newX, newY)) {
-			/*
-			 * Pawns will only have to check for a valid path if they move
-			 * forward 2 spaces; There is no need for a dX.
-			 */
-			int dY = newY - oldY;
-
-			if (Math.abs(dY) == 2) {
-				int checkY = this.isWhite() ? oldY + 1 : oldY - 1;
-
-				if (board.getPiece(oldX, checkY) != null) {
-					return false;
-				} else {
-					return true;
-				}
-			} else {
-				return true;
-			}
-		} else {
-			return false;
-		}
+		return false;
 	}
 }

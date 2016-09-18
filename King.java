@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Math;
+
 public class King extends Piece {
     private boolean firstMove;
 
@@ -8,14 +10,26 @@ public class King extends Piece {
         this.firstMove = true;
     }
 
-    @Override
-    public void moved() {
-        firstMove = false;
+    public King(boolean isWhite, int x, int y) {
+        super("King", "K", isWhite, x, y);
+        this.firstMove = true;
     }
+
+	@Override
+	public boolean moveTo(int newX, int newY) {
+		if (legalPosition(newX, newY) {
+			this.x = newX;
+			this.y = newY;
+			firstMove = false;
+			return true;
+		}
+
+		return false;
+	}
 
     // TODO: Castling!!!
 	@Override
-	protected boolean legalPosition(int oldX, int oldY, int newX, int newY) {
+	public boolean legalPosition(int oldX, int oldY, int newX, int newY) {
 		int dX = newX - oldX;
 		int dY = newY - oldY;
 
@@ -27,15 +41,4 @@ public class King extends Piece {
             return Math.abs(dX) == 1 && Math.abs(dY) == 1;
         }
 	}
-
-    // TODO: Castling!!!
-    @Override
-    public boolean validMove(int oldX, int oldY, int newX, int newY) {
-        if (this.legalPosition(oldX, oldY, newX, newY)) {
-            // There is no path needed to be checked for at the moment
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
