@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.Math;
+import static java.lang.Math.abs;
 
 public class King extends Piece {
     private boolean firstMove;
@@ -17,7 +17,7 @@ public class King extends Piece {
 
 	@Override
 	public boolean moveTo(int newX, int newY) {
-		if (legalPosition(newX, newY) {
+		if (legalPosition(newX, newY)) {
 			this.x = newX;
 			this.y = newY;
 			firstMove = false;
@@ -29,9 +29,9 @@ public class King extends Piece {
 
     // TODO: Castling!!!
 	@Override
-	public boolean legalPosition(int oldX, int oldY, int newX, int newY) {
-		int dX = newX - oldX;
-		int dY = newY - oldY;
+	public boolean legalPosition(int newX, int newY) {
+		int dX = newX - x;
+		int dY = newY - y;
 
         if (dX == 0) {
             return Math.abs(dY) == 1;

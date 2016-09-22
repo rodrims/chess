@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.Math;
+import static java.lang.Math.abs;
 
 public class Pawn extends Piece {
 	private boolean firstMove;
@@ -17,7 +17,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean moveTo(int newX, int newY) {
-		if (legalPosition(newX, newY) {
+		if (legalPosition(newX, newY)) {
 			this.x = newX;
 			this.y = newY;
 			firstMove = false;
@@ -29,6 +29,9 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean captureAt(int newX, int newY) {
+        int dX = newX - x;
+        int dY = newY - y;
+
 		if (abs(dX) == 1) {
 			return isWhite ? dY == 1 : dY == -1; 
 		}
@@ -43,7 +46,7 @@ public class Pawn extends Piece {
 
 		if (dX == 0) {
 			if (firstMove) {
-				return isWhite ? (dY == 1 || dY == 2) : (dY == -1 || dy == -2);
+				return isWhite ? (dY == 1 || dY == 2) : (dY == -1 || dY == -2);
 			} else {
 				return isWhite ? dY == 1 : dY == -1;
 			}

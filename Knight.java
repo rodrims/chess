@@ -1,6 +1,6 @@
 package chess;
 
-import java.lang.Math;
+import static java.lang.Math.abs;
 
 public class Knight extends Piece {
     public Knight(boolean isWhite) {
@@ -18,8 +18,8 @@ public class Knight extends Piece {
 
 	@Override
 	public boolean legalPosition(int newX, int newY) {
-        int dX = newX - oldX;
-        int dY = newY - oldY;
+        int dX = newX - x;
+        int dY = newY - y;
 
 		if (abs(dX) == 1) {
 			return abs(dY) == 2;

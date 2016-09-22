@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.Math;
+import static java.lang.Math.abs;
 
 public class Queen extends Piece {
     public Queen(boolean isWhite) {
@@ -12,9 +12,9 @@ public class Queen extends Piece {
     }
 
 	@Override
-	public boolean legalPosition(int oldX, int oldY, int newX, int newY) {
-		int dX = newX - oldX;
-		int dY = newY - oldY;
+	public boolean legalPosition(int newX, int newY) {
+		int dX = newX - x;
+		int dY = newY - y;
 
 		// If dX and dY are exclusively 0, then the queen is behaving like a
 		// bishop, otherwise she is behaving like a rook.
@@ -23,8 +23,5 @@ public class Queen extends Piece {
         } else {
             return abs(dX) == abs(dY);
         }
-
-		// TODO This *should* be unnecessary, but I'll keep it here for now.
-		return false;
 	}
 }

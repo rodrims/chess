@@ -1,13 +1,13 @@
 package chess;
 
-import java.lang.Math;
+import static java.lang.Math.abs;
 
 public abstract class Piece {
-	private static String name;
-	private static String letter;
-	private boolean isWhite;
-	private int x;
-	private int y;
+	protected static String name;
+	protected static String letter;
+	protected boolean isWhite;
+	protected int x;
+	protected int y;
 
 	public Piece(String name, String letter, boolean isWhite) {
 		this.name = name;
@@ -16,7 +16,7 @@ public abstract class Piece {
 	}
 
 	public Piece(String name, String letter, boolean isWhite, int x, int y) {
-		Piece(name, letter, isWhite);
+		this(name, letter, isWhite);
 		this.x = x;
 		this.y = y;
 	}
@@ -65,7 +65,7 @@ public abstract class Piece {
 	/*
 	 * Returns a path of coordinates the move would take the piece through.
 	 */
- 	public abstract int[][] path(int newX, int newY) {
+ 	public int[][] path(int newX, int newY) {
 		// I avoid these, but not impossible to continue if !legalPosition().
 		if (!legalPosition(newX, newY)) {
 			throw new IllegalArgumentException("Cannot compute path.");
@@ -98,6 +98,12 @@ public abstract class Piece {
 		}
 
 		return path;
+	}
+
+	@Override
+
+	public String toString() {
+		return (isWhite ? "w" : "b") + letter; 
 	}
 
 	/*

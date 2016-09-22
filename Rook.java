@@ -1,5 +1,7 @@
 package chess;
 
+import static java.lang.Math.abs;
+
 public class Rook extends Piece {
 	private boolean firstMove = true;
 
@@ -13,7 +15,7 @@ public class Rook extends Piece {
 
 	@Override
 	public boolean moveTo(int newX, int newY) {
-		if (legalPosition(newX, newY) {
+		if (legalPosition(newX, newY)) {
 			this.x = newX;
 			this.y = newY;
 			firstMove = false;

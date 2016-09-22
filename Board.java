@@ -48,29 +48,20 @@ public class Board {
 		board[3][7] = new Queen(false, 3, 7);
 	}
 
-	// TODO this shouldn't be used as it allows the caller to be able to call
-	// the piece's moveTo() function without actually moving the piece on the
-	// board.
-	public Piece getPiece(int x, int y) {
-		if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
-			throw new IllegalArgumentException("Coordinates ouside board.");
-		} else {
-			return board[x][y];
-		}
+	public boolean hasPiece(int x, int y) {
+		return board[x][y] != null;
 	}
 
-    /*
-     * The piece chosen is guaranteed to be the correct color of the current
-     * player whose turn it is. The position is also guaranteed to have a piece.
-     */
+	public boolean pieceIsWhite(int x, int y) {
+		return board[x][y].isWhite();
+	}
+
 	public boolean movePiece(int oldX, int oldY, int newX, int newY) {
-		boolean retVal = true;
         Piece from = board[oldX][oldY];
         Piece to = board[newX][newY];
 		int[][] path = from.path(newX, newX);
 
-		// Position represents a position on the board and the first and second
-		// elements respectively represent that position's x and y values.
+		// Position is a tile on the board with [0] being x and [1] being y
 		if (path != null) {
 			for (int[] position: path) {
 				if (board[position[0]][position[1]] != null) {
@@ -79,18 +70,13 @@ public class Board {
 			}
 		}
 		
-		// TODO Maybe put in a putPiece() helper method so no repeat code?
 		if (to == null) {
 			if (board[oldX][oldY].moveTo(newX, newY)) {
-				board[newX][newY] = board[oldX][oldY];
-				board[oldX][oldY] = null;
-				return true;
+				return putPiece(oldX, oldY, newX, newY);
 			}
 		} else if (!from.sameColor(to)) {
 			if (board[oldX][oldY].captureAt(newX, newY)) {
-				board[newX][newY] = board[oldX][oldY];
-				board[oldX][oldY] = null;
-				return true;
+				return putPiece(oldX, oldY, newX, newY);
 			}
 		}
 
@@ -98,16 +84,36 @@ public class Board {
 	}
 
     public void printBoard() {
+		System.out.printf("\033[H\033[2J");
         for (int j = SIZE - 1; j >= 0; j--) {
             System.out.print("\n  +---+---+---+---+---+---+---+---+\n");
             System.out.printf("%d ", j + 1);
             for (int i = 0; i < SIZE; i++) {
-                System.out.print("|");
-                System.out.printf(board[i][j].toString());
+                System.out.print("+");
+                System.out.printf(positionToString(i, j));
             }
-            System.out.print("|");
+            System.out.print("+");
         }
         System.out.print("\n  +---+---+---+---+---+---+---+---+");
         System.out.print("\n    a   b   c   d   e   f   g   h\n");
     }
+
+	/*
+	 * PRIVATE HELPER METHODS
+	 */
+
+	private boolean putPiece(int oldX, int oldY, int newX, int newY) {
+		board[newX][newY] = board[oldX][oldY];
+		board[oldX][oldY] = null;
+		// Always returns true for the purposes of movePiece()
+		return true;
+	}
+
+	private String positionToString(int x, int y) {
+		if (board[x][y] != null) {
+			return board[x][y].toString();
+		}
+
+		return "   ";
+	}
 }

@@ -61,47 +61,32 @@ public class Game {
     }
 
     private static void moveCommand(String moveString) {
-        /*
-         * This matcher is delcared here since it needs to be re-initialized
-         * for every different string (I think). So it's easier to declare and
-         * initialize here in one step than in multiple convoluted ones.
-         */
+        // This matcher is delcared here since it needs to be re-initialized
+        // for every different string (I think). So it's easier to declare and
+        // initialize here in one step than in multiple convoluted ones.
         Matcher matcher = patt.matcher(moveString);
 
         if (matcher.matches()) {
-            /*
-             * TODO Magic Number
-             */
+            // TODO magic numbers here
             int oldX = moveString.charAt(0) - 'a';
             int oldY = moveString.charAt(1) - '1';
             int newX = moveString.charAt(6) - 'a';
             int newY = moveString.charAt(7) - '1';
-            movePiece(oldX, oldY, newX, newY);
+			if (!movePiece(oldX, oldY, newX, newY)) {
+				System.out.println("That move is illegal");
+			}
         } else {
             System.out.println("That is not a valid move command.");
         }
     }
 
-    private static void movePiece(int oldX, int oldY, int newX, int newY) {
-        Piece chosenPiece = board.getPiece(oldX, oldY);
-
-        if (chosenPiece == null) {
-            System.out.println("There is no piece on that space.");
-        } else if (chosenPiece.isWhite() == whiteTurn) {
-			boolean moveSuccess = board.movePiece(oldX, oldY, newX, newY);
-			if (moveSuccess) {
-				whiteTurn = !whiteTurn;
-                board.printBoard();
-			} else {
-				System.out.println("That is an illegal move.");
+    private static boolean movePiece(int oldX, int oldY, int newX, int newY) {
+		if (board.hasPiece(oldX, oldY)) {
+			if (board.pieceIsWhite(oldX, oldY) == whiteTurn) {
+				return board.movePiece(oldX, oldY, newX, newY);
 			}
-		} else {
-			String color =  whiteTurn ? "white" : "black";
-			System.out.printf("That is not %s's piece.\n", color);
 		}
-	}
 
-    public static Board getBoard() {
-        return board;
-    }
+		return false;
+	}
 }
