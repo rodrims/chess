@@ -83,19 +83,24 @@ public class Board {
 		return false;
 	}
 
-    public void printBoard() {
-		System.out.printf("\033[H\033[2J");
-        for (int j = SIZE - 1; j >= 0; j--) {
-            System.out.print("\n  +---+---+---+---+---+---+---+---+\n");
-            System.out.printf("%d ", j + 1);
+	@Override
+    public String toString() {
+		String boardString = "";
+
+        for (int j = SIZE; j > 0; j--) {
+			boardString += "\n  +---+---+---+---+---+---+---+---+";
+            boardString += String.format("\n%d ", j);
             for (int i = 0; i < SIZE; i++) {
-                System.out.print("+");
-                System.out.printf(positionToString(i, j));
+                boardString += "|";
+                boardString += positionToString(i, j - 1);
             }
-            System.out.print("+");
+			boardString += "|";
         }
-        System.out.print("\n  +---+---+---+---+---+---+---+---+");
-        System.out.print("\n    a   b   c   d   e   f   g   h\n");
+
+		boardString += "\n  +---+---+---+---+---+---+---+---+";
+		boardString += "\n    a   b   c   d   e   f   g   h\n";
+
+		return boardString;
     }
 
 	/*
@@ -111,7 +116,7 @@ public class Board {
 
 	private String positionToString(int x, int y) {
 		if (board[x][y] != null) {
-			return board[x][y].toString();
+			return " " + board[x][y].toString();
 		}
 
 		return "   ";

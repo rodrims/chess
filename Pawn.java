@@ -6,7 +6,7 @@ public class Pawn extends Piece {
 	private boolean firstMove;
 
 	public Pawn(boolean isWhite) {
-        super("Pawn", " ", isWhite);
+        super("Pawn", "P", isWhite);
 		this.firstMove = true;
     }
 

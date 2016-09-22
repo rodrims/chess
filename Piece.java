@@ -66,9 +66,11 @@ public abstract class Piece {
 	 * Returns a path of coordinates the move would take the piece through.
 	 */
  	public int[][] path(int newX, int newY) {
-		// I avoid these, but not impossible to continue if !legalPosition().
+		// TODO There should be a better way to handle this, but it's covered
+		// for now in the Board class that checks for both a legal path and a
+		// legal position.
 		if (!legalPosition(newX, newY)) {
-			throw new IllegalArgumentException("Cannot compute path.");
+			return null;
 		}
 
 		int[][] path;
@@ -107,7 +109,7 @@ public abstract class Piece {
 	}
 
 	/*
-	 * ___ABSTRACT METHODS___
+	 * ABSTRACT METHOD
 	 */
 
 	/*

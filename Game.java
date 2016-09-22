@@ -33,7 +33,7 @@ public class Game {
         if (inputString.equals("new game")) {
            newGame();
        } else if (inputString.equals("print board")) {
-			board.printBoard();
+			printBoard();
         } else if (inputString.equals("help")) {
             System.out.println(
                 "new game - starts a new game\n"
@@ -57,7 +57,7 @@ public class Game {
         newGame = true;
         whiteTurn = true;
         System.out.println("You've started a new game, white goes first.");
-		board.printBoard();
+		printBoard();
     }
 
     private static void moveCommand(String moveString) {
@@ -88,5 +88,10 @@ public class Game {
 		}
 
 		return false;
+	}
+
+	// TODO Is this really necessary?
+	private static void printBoard() {
+		System.out.println(board.toString());
 	}
 }
