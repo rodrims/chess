@@ -77,6 +77,7 @@ public class Game {
 				System.out.println("That move is illegal");
 			} else {
 				printBoard();
+				whiteTurn = !whiteTurn;
 			}
         } else {
             System.out.println("That is not a valid move command.");
@@ -94,7 +95,7 @@ public class Game {
 	}
 
 	private static void printBoard() throws IOException, InterruptedException {
-		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+		// new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		System.out.println(board.toString());
 	}
 }

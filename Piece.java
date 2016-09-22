@@ -80,13 +80,13 @@ public abstract class Piece {
 		int dY = newY - y;
 		// Gives an increment variable so whether dX and dY are positive or
 		// negative can be disregarded.
-		int incX = dX == 0 ? 0 : dX > 0 ? 1 : -1;
-		int incY = dY == 0 ? 0 : dY > 0 ? 1 : -1;
+		int incX = dX == 0 ? 0 : (dX > 0 ? 1 : -1);
+		int incY = dY == 0 ? 0 : (dY > 0 ? 1 : -1);
 
 		// Distance is the number of positions, minus one, moved through. This
 		// is calculated using Math.abs.
 		int distance = (dX != 0 ? abs(dX) : abs(dY)) - 1;
-		if (distance == 0) {
+		if (distance <= 0) {
 			path = null;
 		} else {
 			path = new int[distance][2];
@@ -104,7 +104,6 @@ public abstract class Piece {
 	}
 
 	@Override
-
 	public String toString() {
 		return (isWhite ? "w" : "b") + letter; 
 	}

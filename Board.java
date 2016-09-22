@@ -63,7 +63,8 @@ public class Board {
 
 		// Position is a tile on the board with [0] being x and [1] being y
 		if (path != null) {
-			for (int[] position: path) {
+			for (int[] position : path) {
+				System.out.printf("\nPiece at: %d, %d", position[0], position[1]);
 				if (board[position[0]][position[1]] != null) {
 					return false;
 				}
