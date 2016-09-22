@@ -3,8 +3,9 @@ package chess;
 import static java.lang.Math.abs;
 
 public abstract class Piece {
-	protected static String name;
-	protected static String letter;
+	// TODO Both string and letter should probably be static
+	protected String name;
+	protected String letter;
 	protected boolean isWhite;
 	protected int x;
 	protected int y;

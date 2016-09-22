@@ -1,5 +1,6 @@
 package chess;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +12,7 @@ public class Game {
     private static Scanner sc = new Scanner(System.in);
     private static Pattern patt = Pattern.compile("[a-h][1-8] to [a-h][1-8]");
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		boolean exit = false;
 		String command = "";
 
@@ -29,7 +30,7 @@ public class Game {
 		} while(!exit);
 	}
 
-	private static boolean handleInput(String inputString) {
+	private static boolean handleInput(String inputString) throws IOException, InterruptedException {
         if (inputString.equals("new game")) {
            newGame();
        } else if (inputString.equals("print board")) {
@@ -52,7 +53,7 @@ public class Game {
 		return false;
 	}
 
-    private static void newGame() {
+    private static void newGame() throws IOException, InterruptedException {
         board.resetBoard();
         newGame = true;
         whiteTurn = true;
@@ -60,7 +61,7 @@ public class Game {
 		printBoard();
     }
 
-    private static void moveCommand(String moveString) {
+    private static void moveCommand(String moveString) throws IOException, InterruptedException {
         // This matcher is delcared here since it needs to be re-initialized
         // for every different string (I think). So it's easier to declare and
         // initialize here in one step than in multiple convoluted ones.
@@ -74,6 +75,8 @@ public class Game {
             int newY = moveString.charAt(7) - '1';
 			if (!movePiece(oldX, oldY, newX, newY)) {
 				System.out.println("That move is illegal");
+			} else {
+				printBoard();
 			}
         } else {
             System.out.println("That is not a valid move command.");
@@ -90,8 +93,8 @@ public class Game {
 		return false;
 	}
 
-	// TODO Is this really necessary?
-	private static void printBoard() {
+	private static void printBoard() throws IOException, InterruptedException {
+		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		System.out.println(board.toString());
 	}
 }
