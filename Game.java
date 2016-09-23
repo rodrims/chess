@@ -73,6 +73,7 @@ public class Game {
             int oldY = moveString.charAt(1) - '1';
             int newX = moveString.charAt(6) - 'a';
             int newY = moveString.charAt(7) - '1';
+			System.out.printf("\nIn Game:\noldX->%d\noldY->%d\nnewX->%d\nnewY->%d\n", oldX, oldY, newX, newY);
 			if (!movePiece(oldX, oldY, newX, newY)) {
 				System.out.println("That move is illegal");
 			} else {

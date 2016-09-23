@@ -16,15 +16,10 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public boolean moveTo(int newX, int newY) {
-		if (legalPosition(newX, newY)) {
-			this.x = newX;
-			this.y = newY;
-			firstMove = false;
-			return true;
-		}
-
-		return false;
+	public void moveTo(int newX, int newY) {
+		this.x = newX;
+		this.y = newY;
+		firstMove = false;
 	}
 
 	@Override
@@ -40,7 +35,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	protected boolean legalPosition(int newX, int newY) {
+	public boolean legalPosition(int newX, int newY) {
 		int dX = newX - x;
         int dY = newY - y;
 

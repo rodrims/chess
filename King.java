@@ -16,15 +16,10 @@ public class King extends Piece {
     }
 
 	@Override
-	public boolean moveTo(int newX, int newY) {
-		if (legalPosition(newX, newY)) {
-			this.x = newX;
-			this.y = newY;
-			firstMove = false;
-			return true;
-		}
-
-		return false;
+	public void moveTo(int newX, int newY) {
+		this.x = newX;
+		this.y = newY;
+		firstMove = false;
 	}
 
     // TODO: Castling!!!

@@ -46,14 +46,9 @@ public abstract class Piece {
         return this.isWhite == other.isWhite;
     }
 
-	public boolean moveTo(int newX, int newY) {
-		if (legalPosition(newX, newY)) {
+	public void moveTo(int newX, int newY) {
 			this.x = newX;
 			this.y = newY;
-			return true;
-		}
-
-		return false;
 	}
 
 	/*
@@ -67,21 +62,19 @@ public abstract class Piece {
 	 * Returns a path of coordinates the move would take the piece through.
 	 */
  	public int[][] path(int newX, int newY) {
-		// TODO There should be a better way to handle this, but it's covered
-		// for now in the Board class that checks for both a legal path and a
-		// legal position.
-		if (!legalPosition(newX, newY)) {
-			return null;
-		}
+		// TODO For now it is guaranteed that this method will only be called
+		// when the coordinates specify a legal position for the piece.
 
 		int[][] path;
 		// Stand for "delta x" and "delta y".
 		int dX = newX - x;
 		int dY = newY - y;
+		System.out.printf("\nnewX->%d\nnewY->%d\nx->%d\ny->%d\n", newX, newY, x, y);
 		// Gives an increment variable so whether dX and dY are positive or
 		// negative can be disregarded.
 		int incX = dX == 0 ? 0 : (dX > 0 ? 1 : -1);
 		int incY = dY == 0 ? 0 : (dY > 0 ? 1 : -1);
+		System.out.printf("\ndX->%d\ndY->%d\nincX->%d\nincY->%d\n", dX, dY, incX, incY);
 
 		// Distance is the number of positions, minus one, moved through. This
 		// is calculated using Math.abs.
@@ -93,6 +86,8 @@ public abstract class Piece {
 			int currX = x + incX;
 			int currY = y + incY;
 			for (int i = 0; i < distance; i++) {
+				System.out.printf("\ncurrX->%d", currX);
+				System.out.printf("\ncurrY->%d\n", currY);
 				path[i][0] = currX;
 				path[i][1] = currY;
 				currX += incX;
@@ -115,5 +110,5 @@ public abstract class Piece {
 	/*
 	 * Returns whether the position is legal based on the current position.
 	 */
-	protected abstract boolean legalPosition(int newX, int newY);
+	public abstract boolean legalPosition(int newX, int newY);
 }

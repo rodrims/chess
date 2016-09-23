@@ -57,27 +57,30 @@ public class Board {
 	}
 
 	public boolean movePiece(int oldX, int oldY, int newX, int newY) {
+		if (!(inBoard(oldX) && inBoard(oldY) && inBoard(newX) && inBoard(newY))) {
+			return false;
+		}
+
         Piece from = board[oldX][oldY];
         Piece to = board[newX][newY];
-		int[][] path = from.path(newX, newX);
+		int[][] path;
 
-		// Position is a tile on the board with [0] being x and [1] being y
-		if (path != null) {
-			for (int[] position : path) {
-				System.out.printf("\nPiece at: %d, %d", position[0], position[1]);
-				if (board[position[0]][position[1]] != null) {
-					return false;
-				}
-			}
-		}
-		
+		// Checks for a legal move or legal capture and executes
 		if (to == null) {
-			if (board[oldX][oldY].moveTo(newX, newY)) {
-				return putPiece(oldX, oldY, newX, newY);
+			if (board[oldX][oldY].legalPosition(newX, newY)) {
+				path = from.path(newX, newX);
+				if (pathClear(path)) {
+					putPiece(oldX, oldY, newX, newY);
+					return true;
+				}
 			}
 		} else if (!from.sameColor(to)) {
 			if (board[oldX][oldY].captureAt(newX, newY)) {
-				return putPiece(oldX, oldY, newX, newY);
+				path = from.path(newX, newX);
+				if (pathClear(path)) {
+					putPiece(oldX, oldY, newX, newY);
+					return true;
+				}
 			}
 		}
 
@@ -108,11 +111,31 @@ public class Board {
 	 * PRIVATE HELPER METHODS
 	 */
 
-	private boolean putPiece(int oldX, int oldY, int newX, int newY) {
+	private boolean pathClear(int[][] path) {
+		// Position is a tile on the board with [0] being x and [1] being y
+		if (path != null) {
+			for (int[] position : path) {
+				if (hasPiece(position[0], position[1])) {
+					System.out.printf("\nPiece at: %d, %d\n", position[0], position[1]);
+					return false;
+				}
+				System.out.printf("\nEmpty at: %d, %d\n", position[0], position[1]);
+			}
+		}
+
+		return true;
+	}
+
+	private void putPiece(int oldX, int oldY, int newX, int newY) {
+		// Changes the piece's local instance coordinates
+		board[oldX][oldY].moveTo(newX, newY);
+		// Changes the piece's storage in the Piece array that backs Board
 		board[newX][newY] = board[oldX][oldY];
 		board[oldX][oldY] = null;
-		// Always returns true for the purposes of movePiece()
-		return true;
+	}
+
+	private boolean inBoard(int coordinate) {
+		return coordinate >= 0 && coordinate < SIZE;
 	}
 
 	private String positionToString(int x, int y) {
