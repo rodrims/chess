@@ -73,17 +73,21 @@ public class Game {
             int oldY = moveString.charAt(1) - '1';
             int newX = moveString.charAt(6) - 'a';
             int newY = moveString.charAt(7) - '1';
-			System.out.printf("\nIn Game:\noldX->%d\noldY->%d\nnewX->%d\nnewY->%d\n", oldX, oldY, newX, newY);
-			if (!movePiece(oldX, oldY, newX, newY)) {
-				System.out.println("That move is illegal");
-			} else {
+
+			if (movePiece(oldX, oldY, newX, newY)) {
 				printBoard();
 				whiteTurn = !whiteTurn;
+			} else {
+				System.out.println("That move is illegal");
 			}
         } else {
             System.out.println("That is not a valid move command.");
         }
     }
+
+	/*
+	 * PRIVATE HELPER METHODS
+	 */
 
     private static boolean movePiece(int oldX, int oldY, int newX, int newY) {
 		if (board.hasPiece(oldX, oldY)) {
@@ -96,7 +100,7 @@ public class Game {
 	}
 
 	private static void printBoard() throws IOException, InterruptedException {
-		// new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		System.out.println(board.toString());
 	}
 }

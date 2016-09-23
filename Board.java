@@ -112,15 +112,12 @@ public class Board {
 	 */
 
 	private boolean pathClear(int[][] path) {
-		System.out.println("pathClear() called");
 		// Position is a tile on the board with [0] being x and [1] being y
 		if (path != null) {
 			for (int[] position : path) {
 				if (hasPiece(position[0], position[1])) {
-					System.out.printf("\nPiece at: %d, %d\n", position[0], position[1]);
 					return false;
 				}
-				System.out.printf("\nEmpty at: %d, %d\n", position[0], position[1]);
 			}
 		}
 
@@ -128,7 +125,7 @@ public class Board {
 	}
 
 	private void putPiece(int oldX, int oldY, int newX, int newY) {
-		// Changes the piece's local instance coordinates
+		// Changes the piece's local instance coordinate variables
 		board[oldX][oldY].moveTo(newX, newY);
 		// Changes the piece's storage in the Piece array that backs Board
 		board[newX][newY] = board[oldX][oldY];
