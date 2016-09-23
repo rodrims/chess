@@ -68,7 +68,7 @@ public class Board {
 		// Checks for a legal move or legal capture and executes
 		if (to == null) {
 			if (board[oldX][oldY].legalPosition(newX, newY)) {
-				path = from.path(newX, newX);
+				path = from.path(newX, newY);
 				if (pathClear(path)) {
 					putPiece(oldX, oldY, newX, newY);
 					return true;
@@ -76,7 +76,7 @@ public class Board {
 			}
 		} else if (!from.sameColor(to)) {
 			if (board[oldX][oldY].captureAt(newX, newY)) {
-				path = from.path(newX, newX);
+				path = from.path(newX, newY);
 				if (pathClear(path)) {
 					putPiece(oldX, oldY, newX, newY);
 					return true;
@@ -112,6 +112,7 @@ public class Board {
 	 */
 
 	private boolean pathClear(int[][] path) {
+		System.out.println("pathClear() called");
 		// Position is a tile on the board with [0] being x and [1] being y
 		if (path != null) {
 			for (int[] position : path) {

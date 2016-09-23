@@ -62,6 +62,7 @@ public abstract class Piece {
 	 * Returns a path of coordinates the move would take the piece through.
 	 */
  	public int[][] path(int newX, int newY) {
+		System.out.printf("\nnewX->%d\nnewY->%d\nx->%d\ny->%d\n", newX, newY, x, y);
 		// TODO For now it is guaranteed that this method will only be called
 		// when the coordinates specify a legal position for the piece.
 
@@ -69,7 +70,6 @@ public abstract class Piece {
 		// Stand for "delta x" and "delta y".
 		int dX = newX - x;
 		int dY = newY - y;
-		System.out.printf("\nnewX->%d\nnewY->%d\nx->%d\ny->%d\n", newX, newY, x, y);
 		// Gives an increment variable so whether dX and dY are positive or
 		// negative can be disregarded.
 		int incX = dX == 0 ? 0 : (dX > 0 ? 1 : -1);
