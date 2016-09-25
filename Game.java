@@ -10,7 +10,7 @@ public class Game {
     private static boolean whiteTurn = true;
 	private static Board board = new Board();
     private static Scanner sc = new Scanner(System.in);
-    private static Pattern patt = Pattern.compile("[a-h][1-8] to [a-h][1-8]");
+   private static Pattern patt = Pattern.compile("[a-h][1-8] to [a-h][1-8]");
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		boolean exit = false;
@@ -84,10 +84,6 @@ public class Game {
             System.out.println("That is not a valid move command.");
         }
     }
-
-	/*
-	 * PRIVATE HELPER METHODS
-	 */
 
     private static boolean movePiece(int oldX, int oldY, int newX, int newY) {
 		if (board.hasPiece(oldX, oldY)) {

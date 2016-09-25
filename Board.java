@@ -66,16 +66,18 @@ public class Board {
 		int[][] path;
 
 		// Checks for a legal move or legal capture and executes
-		if (to == null) {
-			if (board[oldX][oldY].legalPosition(newX, newY)) {
+		// The other position is empty
+		if (!hasPiece(newX, newY)) {
+			if (from.legalPosition(newX, newY)) {
 				path = from.path(newX, newY);
 				if (pathClear(path)) {
 					putPiece(oldX, oldY, newX, newY);
 					return true;
 				}
 			}
+		// The pieces are of two different colors (one can capture the other)
 		} else if (!from.sameColor(to)) {
-			if (board[oldX][oldY].captureAt(newX, newY)) {
+			if (from.captureAt(newX, newY)) {
 				path = from.path(newX, newY);
 				if (pathClear(path)) {
 					putPiece(oldX, oldY, newX, newY);
@@ -115,6 +117,7 @@ public class Board {
 		// Position is a tile on the board with [0] being x and [1] being y
 		if (path != null) {
 			for (int[] position : path) {
+				// Use method hasPiece() to make it clearer what I'm doing
 				if (hasPiece(position[0], position[1])) {
 					return false;
 				}
