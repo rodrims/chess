@@ -3,7 +3,7 @@ package chess;
 import static java.lang.Math.abs;
 
 public abstract class Piece {
-	// TODO Both string and letter should probably be static
+	// TODO both string and letter should probably be static
 	protected String name;
 	protected String letter;
 	protected boolean isWhite;

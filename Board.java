@@ -56,6 +56,7 @@ public class Board {
 		return board[x][y].isWhite();
 	}
 
+	// TODO give more feedback about why the move failed
 	public boolean movePiece(int oldX, int oldY, int newX, int newY) {
 		if (!(inBoard(oldX) && inBoard(oldY) && inBoard(newX) && inBoard(newY))) {
 			return false;

@@ -95,7 +95,9 @@ public class Game {
 		return false;
 	}
 
+	// TODO I need to figure out wtf is up with these exceptions too
 	private static void printBoard() throws IOException, InterruptedException {
+		// TODO do I still need this?
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		System.out.println(board.toString());
 	}
