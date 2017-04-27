@@ -10,7 +10,7 @@ public class Game {
     private static boolean whiteTurn = true;
 	private static Board board = new Board();
     private static Scanner sc = new Scanner(System.in);
-   private static Pattern patt = Pattern.compile("[a-h][1-8] to [a-h][1-8]");
+    private static Pattern patt = Pattern.compile("[a-h][1-8] to [a-h][1-8]");
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		boolean exit = false;
@@ -95,10 +95,9 @@ public class Game {
 		return false;
 	}
 
-	// TODO I need to figure out wtf is up with these exceptions too
-	private static void printBoard() throws IOException, InterruptedException {
-		// TODO do I still need this?
-		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+	private static void printBoard() {
+		System.out.println("\033[H\033[2J");
+		System.out.flush();
 		System.out.println(board.toString());
 	}
 }
